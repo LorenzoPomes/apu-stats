@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>APU Crash Count</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Crash">
+<meta name="theme-color" content="#12100E">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEG0lEQVR4nO3cXW7cMAxFYaXoc5Cmu+0CutuiW+hD0SBF5jqSTEqkeL7n/gzMM7RjT+bp9eW5AY982f0CEBdxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggfd39AtqvH992v4S4vv/8vfF/f9ryyJ4gJqwPZWkcNGFiWSUr4qAJJ96VuF+QUoYf72PruDnIYhmnFeK1OShjJaejbb85yGIj2xVivDkoYy/b428ZB2VEYDgFszgoIw6rWdjEQRnRmEzEIA7KiOn+XO7GQRmR3ZwOj+wh3YqDtRHfnRnNx0EZWUxPitMKpMk4WBu5zM1rJg7KyGhiapxWIBEHpOE4OKfkNTo7Ngck4oA0FgfnlOyGJsjmgEQckIgD0kAcXHCcoX+ObA5IxAGJOCARByTigEQckIjDy96v8zJBHC7+lpG9D+Kw976J1H0Qh7GPNeTtgzgsqQ6S9kEcZi4KSPpYijhsnFdGIw4TR5bRInz3+YWHB/36cG/8K6P/SHxsDi/Zy2jE4eSAMhpxeDijjEYcuEAcxo5ZG404Jpz6g+tHxDGmThmNOIYkfUQyjTh6VSujEUengmU04uhRs4xGHJ8qW0YjjmuVy2jEcaF4GY04Jpx3P0MhjsfU2qhTRiOOIaXKaMTRr1oZjThwgTi6FFwbjTh61CyjEcenypbRiONa5TIacZT68M6o0nFQxrW6cfDo5FNF46CMHhXjoIxO5eKgjH7l4kC/WnGwNoYUioMyRlWJgw/vTCgRB2XMKREH5tSNg7XxqaJxUEaPinFQRqdycVBGv1pxUMaQQnFQxqij4uDDO7bOiYMyzB0SB89NPJwQB2U4OSEOOEkfB2vDT+44KMNV4jgow1vWOChjgZRxUMYa+eLgZtcy+eJQKMPcIXFQhocT4qAMJ+njoAw/ueOgDFeJ46AMb1njoIwF4sbB/Yzt4sahUMYyQePgBnkEEeOgjCDCxUEZcTy9vjx3/tEFJ3suQtfofAcG2hyUEU2UOCgjoBBxUEZMIeJQBVDGXiHiaI86oIztosTR/q+BMiIIFEf71wRlBBErjkYZkYSLA3EQByTigEQckIgDEnFAGoiDT1qcoX+ObA5IxAGJOCCNxcFlR3ZDE2RzQCIOSMNxcGbJa3R2bA5IxAFpJg7OLBlNTG1yc9BHLnPz4rQCaT4OlkcW05O6tTnoI747M+K0AuluHCyPyG5Ox2Bz0EdM9+dic1qhj2hMJmJ2zUEfcVjNwvKClD4iMJyC8U8r9LGX7fEf+MK4Ifw+9GIeb0uv+xyskJWcjrbX5njDCnHl+iZ0v0PKCvHjfWzdN8d7bBETy95vS+N4QyUT1u/gPXG8RygX9p6U98eBsHhkD4k4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKA9Ad+xSbPYjqglQAAAABJRU5ErkJggg==">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEG0lEQVR4nO3cXW7cMAxFYaXoc5Cmu+0CutuiW+hD0SBF5jqSTEqkeL7n/gzMM7RjT+bp9eW5AY982f0CEBdxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggfd39AtqvH992v4S4vv/8vfF/f9ryyJ4gJqwPZWkcNGFiWSUr4qAJJ96VuF+QUoYf72PruDnIYhmnFeK1OShjJaejbb85yGIj2xVivDkoYy/b428ZB2VEYDgFszgoIw6rWdjEQRnRmEzEIA7KiOn+XO7GQRmR3ZwOj+wh3YqDtRHfnRnNx0EZWUxPitMKpMk4WBu5zM1rJg7KyGhiapxWIBEHpOE4OKfkNTo7Ngck4oA0FgfnlOyGJsjmgEQckIgD0kAcXHCcoX+ObA5IxAGJOCARByTigEQckIjDy96v8zJBHC7+lpG9D+Kw976J1H0Qh7GPNeTtgzgsqQ6S9kEcZi4KSPpYijhsnFdGIw4TR5bRInz3+YWHB/36cG/8K6P/SHxsDi/Zy2jE4eSAMhpxeDijjEYcuEAcxo5ZG404Jpz6g+tHxDGmThmNOIYkfUQyjTh6VSujEUengmU04uhRs4xGHJ8qW0YjjmuVy2jEcaF4GY04Jpx3P0MhjsfU2qhTRiOOIaXKaMTRr1oZjThwgTi6FFwbjTh61CyjEcenypbRiONa5TIacZT68M6o0nFQxrW6cfDo5FNF46CMHhXjoIxO5eKgjH7l4kC/WnGwNoYUioMyRlWJgw/vTCgRB2XMKREH5tSNg7XxqaJxUEaPinFQRqdycVBGv1pxUMaQQnFQxqij4uDDO7bOiYMyzB0SB89NPJwQB2U4OSEOOEkfB2vDT+44KMNV4jgow1vWOChjgZRxUMYa+eLgZtcy+eJQKMPcIXFQhocT4qAMJ+njoAw/ueOgDFeJ46AMb1njoIwF4sbB/Yzt4sahUMYyQePgBnkEEeOgjCDCxUEZcTy9vjx3/tEFJ3suQtfofAcG2hyUEU2UOCgjoBBxUEZMIeJQBVDGXiHiaI86oIztosTR/q+BMiIIFEf71wRlBBErjkYZkYSLA3EQByTigEQckIgDEnFAGoiDT1qcoX+ObA5IxAGJOCCNxcFlR3ZDE2RzQCIOSMNxcGbJa3R2bA5IxAFpJg7OLBlNTG1yc9BHLnPz4rQCaT4OlkcW05O6tTnoI747M+K0AuluHCyPyG5Ox2Bz0EdM9+dic1qhj2hMJmJ2zUEfcVjNwvKClD4iMJyC8U8r9LGX7fEf+MK4Ifw+9GIeb0uv+xyskJWcjrbX5njDCnHl+iZ0v0PKCvHjfWzdN8d7bBETy95vS+N4QyUT1u/gPXG8RygX9p6U98eBsHhkD4k4IBEHJOKARByQiAMScUAiDkjEAYk4IBEHJOKA9Ad+xSbPYjqglQAAAABJRU5ErkJggg==">
+<style>
+:root{--ink:#F5EFE6;--ground:#12100E;--panel:#1D1A16;--panel2:#26221C;
+  --line:#332E27;--accent:#FF8A1F;--dim:#8A8175;--danger:#C2452A}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{background:var(--ground);color:var(--ink);
+  font:400 16px/1.4 -apple-system,system-ui,"Segoe UI",sans-serif;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;user-select:none}
+button,input{font:inherit;color:inherit}
+button{border:0;background:none;cursor:pointer}
+
+.top{position:sticky;top:0;z-index:20;background:var(--ground);
+  padding:calc(env(safe-area-inset-top) + 10px) 14px 8px;border-bottom:1px solid var(--line)}
+.tRow{display:flex;align-items:center;gap:10px}
+.brand{font-size:11px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase}
+.gameWrap{margin-left:auto;display:flex;align-items:center;gap:6px}
+.gameWrap label{font-size:11px;letter-spacing:.18em;color:var(--dim)}
+#game{width:74px;background:var(--panel);border:1px solid var(--line);border-radius:8px;
+  padding:5px 8px;font-weight:700;letter-spacing:.06em;text-align:center}
+.sum{display:flex;gap:14px;margin-top:8px;font-size:12px;color:var(--dim);align-items:baseline}
+.sum b{color:var(--ink);font-weight:700;font-size:15px}
+.clipTag{background:var(--accent);color:#12100E;font-weight:800;font-size:13px;
+  padding:3px 10px;border-radius:999px;letter-spacing:.04em}
+
+.rail{display:flex;gap:8px;overflow-x:auto;padding:10px 14px;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;border-bottom:1px solid var(--line)}
+.rail::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;min-width:66px;padding:8px 10px 9px;border-radius:12px;
+  background:var(--panel);border:1px solid var(--line);text-align:center;position:relative}
+.chip .n{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1}
+.chip .s{display:block;margin-top:3px;font-size:10px;color:var(--dim);max-width:76px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#12100E}
+.chip[aria-pressed="true"] .s{color:#12100E;opacity:.75}
+.chip.empty{opacity:.32}
+.chip.done{border-color:var(--accent)}
+.chip .dot{position:absolute;top:6px;right:7px;width:8px;height:8px;border-radius:50%;
+  background:var(--accent)}
+.chip[aria-pressed="true"] .dot{background:#12100E}
+
+main{padding:6px 10px 152px}
+.grp{font-size:10px;letter-spacing:.24em;color:var(--dim);text-transform:uppercase;
+  padding:16px 6px 6px}
+.row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  margin-bottom:8px;padding:10px 10px 10px 14px}
+.row.hot{border-color:#5A4526}
+.lab{min-width:0}
+.lab .t{font-size:14px;font-weight:600}
+.lab .g{font-size:10.5px;color:var(--dim);margin-top:3px}
+.tally{display:flex;align-items:flex-end;gap:7px;height:15px;margin-top:6px}
+.grpMark{display:flex;position:relative;gap:3px}
+.grpMark i{display:block;width:2px;height:13px;background:var(--dim);border-radius:1px}
+.grpMark.five::after{content:"";position:absolute;left:-3px;top:6px;width:24px;height:2px;
+  background:var(--dim);transform:rotate(-24deg);border-radius:1px}
+.more{font-size:10px;color:var(--dim);align-self:center}
+.val{min-width:44px;text-align:center;font-size:30px;font-weight:800;letter-spacing:-.03em}
+.val.zero{color:#4A443C}
+.btns{display:flex;gap:8px}
+.minus,.plus{border-radius:12px;font-weight:800;display:grid;place-items:center;
+  border:1px solid var(--line);background:var(--panel2)}
+.minus{width:46px;height:52px;font-size:24px;color:var(--dim)}
+.plus{width:74px;height:52px;font-size:28px;background:var(--accent);color:#12100E;
+  border-color:var(--accent)}
+.plus:active,.minus:active{transform:scale(.94)}
+.bump{animation:bump .16s ease-out}
+@keyframes bump{0%{transform:scale(1)}45%{transform:scale(1.22)}100%{transform:scale(1)}}
+
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;
+  padding:10px 12px calc(env(safe-area-inset-bottom) + 10px);
+  background:linear-gradient(180deg,rgba(18,16,14,0),var(--ground) 22%)}
+.nextClip{width:100%;padding:16px;border-radius:14px;background:var(--accent);color:#12100E;
+  font-size:15px;font-weight:800;letter-spacing:.06em;margin-bottom:8px}
+.nextClip:active{transform:scale(.99)}
+.bar{display:flex;gap:8px}
+.bar button{flex:1;padding:13px 4px;border-radius:12px;background:var(--panel);
+  border:1px solid var(--line);font-size:12px;font-weight:600;letter-spacing:.04em}
+.bar button:disabled{opacity:.35}
+.bar .go{background:var(--panel2);border-color:#4A4238}
+
+.sheet{position:fixed;inset:0;z-index:40;background:var(--ground);
+  padding:calc(env(safe-area-inset-top) + 14px) 14px calc(env(safe-area-inset-bottom) + 20px);
+  overflow:auto;display:none}
+.sheet.on{display:block}
+.sheet h2{margin:0 0 4px;font-size:19px}
+.sheet p{margin:0 0 16px;font-size:13px;color:var(--dim);line-height:1.5}
+.close{position:absolute;top:calc(env(safe-area-inset-top) + 10px);right:12px;
+  width:38px;height:38px;border-radius:10px;background:var(--panel);font-size:20px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{padding:6px 4px;text-align:center;border-bottom:1px solid var(--line)}
+th{color:var(--dim);font-weight:600;font-size:10px;letter-spacing:.08em}
+td.name{text-align:left;white-space:nowrap;max-width:110px;overflow:hidden;text-overflow:ellipsis}
+tr.tot td{font-weight:800;border-top:2px solid var(--line);border-bottom:0}
+.ed{display:grid;grid-template-columns:34px 56px 1fr;gap:8px;margin-bottom:8px;align-items:center}
+.ed .slot{font-size:10px;color:var(--dim);text-align:center}
+.ed input{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px;
+  min-width:0}
+.act{width:100%;padding:15px;border-radius:12px;background:var(--accent);color:#12100E;
+  font-weight:800;margin-top:8px}
+.act.ghost{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+.act.warn{background:#3A1A12;color:#FFC9B8;border:1px solid #6B2E1C}
+.toast{position:fixed;left:50%;bottom:150px;transform:translateX(-50%) translateY(14px);
+  background:var(--ink);color:var(--ground);padding:11px 18px;border-radius:999px;
+  font-size:13px;font-weight:700;opacity:0;transition:.22s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.warnbox{background:#2A1D12;border:1px solid #5A3A1C;border-radius:10px;padding:11px 13px;
+  font-size:12.5px;color:#E8C79A;margin-bottom:14px;line-height:1.55}
+
+/* ---- finestra di conferma ---- */
+.modal{position:fixed;inset:0;z-index:70;background:rgba(8,7,6,.72);display:none;
+  align-items:center;justify-content:center;padding:22px}
+.modal.on{display:flex}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+  padding:22px;max-width:340px;width:100%}
+.box h3{margin:0 0 10px;font-size:18px}
+.box p{margin:0 0 6px;font-size:13.5px;color:var(--dim);line-height:1.55}
+.box .big{color:var(--ink);font-weight:800;font-size:15px}
+.box .row2{display:flex;gap:9px;margin-top:20px}
+.box button{flex:1;padding:14px;border-radius:12px;font-weight:800;font-size:14px}
+.box .keep{background:var(--panel2);border:1px solid var(--line)}
+.box .del{background:var(--danger);color:#fff}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="tRow">
+    <span class="brand">APU · Crash</span>
+    <span class="gameWrap"><label for="game">GARA</label><input id="game" value="P01"></span>
+  </div>
+  <div class="sum" id="sumRow"></div>
+</div>
+
+<div class="rail" id="rail"></div>
+<main id="stats"></main>
+
+<div class="dock">
+  <button class="nextClip" id="nextClip">CLIP SUCCESSIVA →</button>
+  <div class="bar">
+    <button id="undo" disabled>Annulla</button>
+    <button id="openTable">Tabella</button>
+    <button id="openRoster">Roster</button>
+    <button class="go" id="openCopy">Esporta</button>
+  </div>
+</div>
+
+<div class="sheet" id="tableSheet">
+  <button class="close" data-close>✕</button>
+  <h2>Totali partita</h2>
+  <p id="tableNote"></p>
+  <div style="overflow-x:auto"><table id="bigTable"></table></div>
+</div>
+
+<div class="sheet" id="rosterSheet">
+  <button class="close" data-close>✕</button>
+  <h2>Roster</h2>
+  <p>Puoi cambiarlo quando vuoi, anche a stagione iniziata. Le modifiche si salvano da sole.</p>
+  <div class="warnbox">
+    L'ordine deve essere lo stesso del foglio Excel: l'esportazione incolla le righe in
+    questa sequenza. Per sostituire un giocatore usa uno slot libero, non scrivere sopra
+    a chi ha già dei conteggi.
+  </div>
+  <div id="rosterEdit"></div>
+  <div style="height:16px"></div>
+  <button class="act ghost" id="clearRoster">Svuota tutti gli slot</button>
+</div>
+
+<div class="sheet" id="copySheet">
+  <button class="close" data-close>✕</button>
+  <h2>Esporta in Excel</h2>
+  <p>Copia il blocco, apri il foglio della gara e incolla nella cella indicata.</p>
+  <div id="copyBlocks"></div>
+  <div style="height:30px"></div>
+  <button class="act warn" id="reset">Azzera tutte le statistiche</button>
+  <p style="margin-top:10px">Chiede conferma. Il roster e il codice gara restano.</p>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3 id="mTitle"></h3>
+    <div id="mBody"></div>
+    <div class="row2">
+      <button class="keep" id="mNo">Annulla</button>
+      <button class="del" id="mYes">Azzera</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CFG = {"storage": "apu-crash-count-v1", "roster": [[1, "Michael Jordan"], [3, "Joseph Mobio"], [6, "Skylar Spencer"], [11, "Zan Mark Sisko"], [21, "Lorenzo Bucarelli"], [22, "Eimantas Bendzius"], [24, "RaeQuan Battle"], [26, "Nick McGlynn"], [31, "Andrea Calzavara"], [34, "Matteo Cavallero"], ["", ""], ["", ""], ["", ""]], "stats": [{"key": "OPP", "label": "OPPORTUNITIES", "group": "CRASH BOARD"}, {"key": "CRA", "label": "CRASH", "group": ""}, {"key": "PUR", "label": "PURGATORY", "group": ""}, {"key": "BCK", "label": "BACK", "group": ""}, {"key": "CCO", "label": "CC OPPORTUNITIES", "group": "CORNER CRASH"}, {"key": "CCH", "label": "CC HIGH", "group": ""}, {"key": "CCL", "label": "CC LOW", "group": ""}, {"key": "CCB", "label": "CC BACK", "group": ""}], "blocks": [{"label": "Colonne C:F", "cell": "C6", "keys": ["OPP", "CRA", "PUR", "BCK"]}, {"label": "Colonne I:L", "cell": "I6", "keys": ["CCO", "CCH", "CCL", "CCB"]}], "clips": true};
+const KEY = CFG.storage, USE_CLIPS = CFG.clips;
+
+let memory = null;
+const store = {
+  read(){ try{ return localStorage.getItem(KEY); }catch(e){ return memory; } },
+  write(v){ try{ localStorage.setItem(KEY, v); }catch(e){ memory = v; } }
+};
+const zero = () => Object.fromEntries(CFG.stats.map(s => [s.key, 0]));
+const blankCounts = () => CFG.roster.map(zero);
+const blank = () => ({
+  game: 'P01',
+  roster: CFG.roster.map(r => ({n: r[0] === null || r[0] === '' ? '' : String(r[0]), name: r[1] || ''})),
+  clips: [], cur: blankCounts(), clipNo: 1, history: []
+});
+
+let S;
+try { S = JSON.parse(store.read()) || blank(); } catch(e){ S = blank(); }
+/* i conteggi salvati con la versione precedente diventano la prima clip chiusa */
+if (S.counts && !S.cur){
+  S.clips = USE_CLIPS ? [S.counts] : [];
+  S.cur = USE_CLIPS ? blankCounts() : S.counts;
+  S.clipNo = USE_CLIPS ? 2 : 1;
+  delete S.counts;
+}
+if (!S.cur || S.cur.length !== CFG.roster.length) S = blank();
+if (!Array.isArray(S.clips)) S.clips = [];
+S.cur.forEach(c => CFG.stats.forEach(s => { if (typeof c[s.key] !== 'number') c[s.key] = 0; }));
+
+let sel = S.roster.findIndex(p => p.name); if (sel < 0) sel = 0;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let saveTimer;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => store.write(JSON.stringify(S)), 120);
+}
+function toast(m){
+  const t = $('toast'); t.textContent = m; t.classList.add('on');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 1600);
+}
+
+/* totale di partita = clip chiuse + clip aperta */
+const total = (p, k) => S.clips.reduce((a, c) => a + c[p][k], 0) + S.cur[p][k];
+const playerClip = p => CFG.stats.reduce((a, s) => a + S.cur[p][s.key], 0);
+const playerTotal = p => CFG.stats.reduce((a, s) => a + total(p, s.key), 0);
+const grandTotal = () => S.roster.reduce((a, _, i) => a + playerTotal(i), 0);
+
+/* ---------- intestazione ---------- */
+function drawSum(){
+  $('sumRow').innerHTML = USE_CLIPS
+    ? '<span class="clipTag">CLIP ' + S.clipNo + '</span>' +
+      '<span>in questa clip <b>' + playerClip(sel) + '</b></span>' +
+      '<span>partita <b>' + grandTotal() + '</b></span>'
+    : '<span>giocatore <b>' + playerTotal(sel) + '</b></span>' +
+      '<span>squadra <b>' + grandTotal() + '</b></span>';
+}
+
+/* ---------- corsia giocatori ---------- */
+function drawRail(){
+  const rail = $('rail'); rail.innerHTML = '';
+  S.roster.forEach((p, i) => {
+    const b = document.createElement('button');
+    const inClip = USE_CLIPS && playerClip(i) > 0;
+    b.className = 'chip' + (p.name ? '' : ' empty') + (inClip ? ' done' : '');
+    b.setAttribute('aria-pressed', i === sel);
+    const badge = USE_CLIPS ? (inClip ? playerClip(i) : '') : (playerTotal(i) || '');
+    b.innerHTML = '<span class="n">' + (p.n || '–') + '</span><span class="s">' +
+      (p.name ? esc(p.name.split(' ').slice(-1)[0]) : 'libero') +
+      (badge ? ' · ' + badge : '') + '</span>' + (inClip ? '<span class="dot"></span>' : '');
+    b.onclick = () => { sel = i; drawRail(); drawStats(); };
+    rail.appendChild(b);
+  });
+  const a = rail.children[sel];
+  if (a) a.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'});
+}
+
+function tally(n){
+  if (n <= 0) return '';
+  const shown = Math.min(n, 25); let h = '', full = Math.floor(shown/5), rest = shown % 5;
+  for (let g = 0; g < full; g++) h += '<span class="grpMark five"><i></i><i></i><i></i><i></i></span>';
+  if (rest) h += '<span class="grpMark">' + '<i></i>'.repeat(rest) + '</span>';
+  if (n > 25) h += '<span class="more">+' + (n - 25) + '</span>';
+  return h;
+}
+
+/* ---------- righe statistica ---------- */
+function drawStats(){
+  const w = $('stats'); w.innerHTML = '';
+  CFG.stats.forEach(st => {
+    if (st.group){
+      const g = document.createElement('div'); g.className = 'grp';
+      g.textContent = st.group; w.appendChild(g);
+    }
+    const v = S.cur[sel][st.key], t = total(sel, st.key);
+    const row = document.createElement('div');
+    row.className = 'row' + (USE_CLIPS && v ? ' hot' : '');
+    row.innerHTML =
+      '<div class="lab"><div class="t">' + st.label + '</div>' +
+      (USE_CLIPS ? '<div class="g">partita: ' + t + '</div>' : '') +
+      '<div class="tally">' + tally(v) + '</div></div>' +
+      '<div class="val' + (v ? '' : ' zero') + '" id="v-' + st.key + '">' + v + '</div>' +
+      '<div class="btns"><button class="minus">−</button><button class="plus">+</button></div>';
+    row.querySelector('.plus').onclick = () => bump(st.key, +1);
+    row.querySelector('.minus').onclick = () => bump(st.key, -1);
+    w.appendChild(row);
+  });
+  drawSum(); $('undo').disabled = S.history.length === 0;
+}
+
+function bump(key, d){
+  if (S.cur[sel][key] + d < 0) return;
+  S.cur[sel][key] += d;
+  S.history.push({t:'b', p: sel, k: key, d});
+  if (S.history.length > 400) S.history.shift();
+  const el = $('v-' + key), v = S.cur[sel][key];
+  el.textContent = v; el.classList.toggle('zero', v === 0);
+  el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+  const row = el.closest('.row');
+  row.querySelector('.tally').innerHTML = tally(v);
+  row.classList.toggle('hot', USE_CLIPS && v > 0);
+  if (USE_CLIPS) row.querySelector('.g').textContent = 'partita: ' + total(sel, key);
+  drawSum(); drawRail(); save();
+  $('undo').disabled = false;
+}
+
+/* ---------- passaggio alla clip successiva ---------- */
+$('nextClip').onclick = () => {
+  if (!USE_CLIPS) return;
+  S.clips.push(S.cur);
+  S.cur = blankCounts();
+  S.clipNo = S.clips.length + 1;
+  S.history.push({t:'c'});
+  drawRail(); drawStats(); save();
+  toast('Clip ' + (S.clipNo - 1) + ' registrata · pulsantiera vuota');
+};
+if (!USE_CLIPS) $('nextClip').style.display = 'none';
+
+$('undo').onclick = () => {
+  const h = S.history.pop(); if (!h) return;
+  if (h.t === 'c'){
+    S.cur = S.clips.pop() || blankCounts();
+    S.clipNo = S.clips.length + 1;
+    toast('Rientrato nella clip ' + S.clipNo);
+  } else {
+    S.cur[h.p][h.k] -= h.d; sel = h.p; toast('Annullato');
+  }
+  drawRail(); drawStats(); save();
+};
+
+$('game').value = S.game;
+$('game').oninput = e => { S.game = e.target.value.toUpperCase(); e.target.value = S.game; save(); };
+
+/* ---------- pannelli ---------- */
+document.querySelectorAll('[data-close]').forEach(b =>
+  b.onclick = () => b.closest('.sheet').classList.remove('on'));
+$('openTable').onclick = () => { drawTable(); $('tableSheet').classList.add('on'); };
+$('openRoster').onclick = () => { drawRoster(); $('rosterSheet').classList.add('on'); };
+$('openCopy').onclick = () => { drawCopy(); $('copySheet').classList.add('on'); };
+
+function drawTable(){
+  $('tableNote').textContent = USE_CLIPS
+    ? 'Somma di ' + S.clips.length + ' clip registrate più la clip ' + S.clipNo + ' aperta.'
+    : 'Controlla i numeri prima di esportarli.';
+  let h = '<tr><th class="name" style="text-align:left">GIOCATORE</th>' +
+          CFG.stats.map(s => '<th>' + s.key + '</th>').join('') + '<th>TOT</th></tr>';
+  S.roster.forEach((p, i) => {
+    if (!p.name) return;
+    const r = CFG.stats.map(s => total(i, s.key));
+    h += '<tr><td class="name">' + (p.n ? '#' + p.n + ' ' : '') + esc(p.name) + '</td>' +
+         r.map(v => '<td' + (v ? '' : ' style="color:#4A443C"') + '>' + v + '</td>').join('') +
+         '<td><b>' + r.reduce((a, b) => a + b, 0) + '</b></td></tr>';
+  });
+  h += '<tr class="tot"><td class="name">TOTALE</td>' +
+       CFG.stats.map(s => '<td>' + S.roster.reduce((a, _, i) => a + total(i, s.key), 0) + '</td>').join('') +
+       '<td>' + grandTotal() + '</td></tr>';
+  $('bigTable').innerHTML = h;
+}
+
+function drawRoster(){
+  const w = $('rosterEdit'); w.innerHTML = '';
+  S.roster.forEach((p, i) => {
+    const d = document.createElement('div'); d.className = 'ed';
+    const s = document.createElement('div'); s.className = 'slot'; s.textContent = i + 1;
+    const n = document.createElement('input'); n.value = p.n; n.placeholder = '#'; n.inputMode = 'numeric';
+    const m = document.createElement('input'); m.value = p.name; m.placeholder = 'slot libero';
+    n.oninput = () => { p.n = n.value.replace(/\D/g, ''); save(); drawRail(); };
+    m.oninput = () => { p.name = m.value; save(); drawRail(); };
+    d.append(s, n, m); w.appendChild(d);
+  });
+}
+
+$('clearRoster').onclick = () => {
+  ask('Svuotare il roster?', '<p>Cancella numeri e nomi di tutti gli slot. '
+      + '<span class="big">I conteggi restano dove sono</span>, legati alla posizione.</p>',
+      'Svuota', () => {
+        S.roster.forEach(p => { p.n = ''; p.name = ''; });
+        drawRoster(); drawRail(); drawStats(); save(); toast('Roster svuotato');
+      });
+};
+
+/* ---------- esportazione ---------- */
+const tsv = keys => S.roster.map((p, i) => keys.map(k => total(i, k)).join('\t')).join('\n');
+
+function drawCopy(){
+  const w = $('copyBlocks'); w.innerHTML = '';
+  if (USE_CLIPS){
+    const n = document.createElement('div'); n.className = 'warnbox';
+    n.textContent = 'Esporta la somma di tutte le clip: ' + S.clips.length +
+      ' registrate più la clip ' + S.clipNo + ' aperta. Non serve chiudere l\'ultima.';
+    w.appendChild(n);
+  }
+  const miss = S.roster.filter(p => !p.name).length;
+  if (miss){
+    const n = document.createElement('div'); n.className = 'warnbox';
+    n.textContent = miss + ' slot roster ' + (miss === 1 ? 'è vuoto' : 'sono vuoti') +
+      ': vengono incollati come zeri, così le righe restano allineate al foglio.';
+    w.appendChild(n);
+  }
+  CFG.blocks.forEach(b => {
+    const btn = document.createElement('button');
+    btn.className = 'act';
+    btn.textContent = b.label + '  →  incolla in ' + b.cell;
+    btn.onclick = () => copy(tsv(b.keys), b.cell);
+    w.appendChild(btn);
+  });
+  const all = document.createElement('button');
+  all.className = 'act ghost'; all.style.marginTop = '18px';
+  all.textContent = 'Copia tutto con i nomi (per controllo)';
+  all.onclick = () => {
+    const head = ['#', 'GIOCATORE', ...CFG.stats.map(s => s.key)].join('\t');
+    const body = S.roster.map((p, i) =>
+      [p.n, p.name, ...CFG.stats.map(s => total(i, s.key))].join('\t')).join('\n');
+    copy(S.game + '\n' + head + '\n' + body, 'appunti');
+  };
+  w.appendChild(all);
+}
+
+function copy(text, where){
+  const done = () => toast(where === 'appunti' ? 'Copiato' : 'Copiato · incolla in ' + where);
+  if (navigator.clipboard && window.isSecureContext)
+    navigator.clipboard.writeText(text).then(done, () => fallback(text, done));
+  else fallback(text, done);
+}
+function fallback(text, done){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch(e){ toast('Copia non riuscita'); }
+  ta.remove();
+}
+
+/* ---------- conferma ---------- */
+let pending = null;
+function ask(title, bodyHtml, yesLabel, fn){
+  $('mTitle').textContent = title;
+  $('mBody').innerHTML = bodyHtml;
+  $('mYes').textContent = yesLabel;
+  pending = fn;
+  $('modal').classList.add('on');
+}
+$('mNo').onclick = () => { pending = null; $('modal').classList.remove('on'); };
+$('mYes').onclick = () => { const f = pending; pending = null; $('modal').classList.remove('on'); if (f) f(); };
+$('modal').onclick = e => { if (e.target === $('modal')) $('mNo').click(); };
+
+$('reset').onclick = () => {
+  const tot = grandTotal();
+  if (!tot){ toast('Non c\'è niente da azzerare'); return; }
+  const detail = USE_CLIPS
+    ? '<p>Stai per cancellare <span class="big">' + tot + ' conteggi</span> distribuiti su '
+      + S.clips.length + ' clip registrate e la clip ' + S.clipNo + ' aperta.</p>'
+    : '<p>Stai per cancellare <span class="big">' + tot + ' conteggi</span> della gara '
+      + esc(S.game) + '.</p>';
+  ask('Azzerare la gara ' + S.game + '?',
+      detail + '<p>Fallo solo dopo aver incollato i numeri in Excel: non si torna indietro. '
+      + 'Il roster resta com\'è.</p>',
+      'Sì, azzera', () => {
+        S.clips = []; S.cur = blankCounts(); S.clipNo = 1; S.history = [];
+        drawRail(); drawStats(); save();
+        $('copySheet').classList.remove('on');
+        toast('Statistiche azzerate');
+      });
+};
+
+drawRail(); drawStats();
+window.addEventListener('beforeunload', () => store.write(JSON.stringify(S)));
+document.addEventListener('visibilitychange', () => { if (document.hidden) store.write(JSON.stringify(S)); });
+</script>
+</body>
+</html>
